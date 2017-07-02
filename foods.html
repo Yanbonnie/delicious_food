@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/zepto.min.js"></script>
+    <script src="js/jquery-weui.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <title>万象城美食节投票评选</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+</head>
+<body>
+    <div class="index-foods">
+        <div class="main-contain">
+           <div class="foods">
+               <span><img src="images/food1.png" alt=""></span>
+               <span><img src="images/food2.png" alt=""></span>
+               <span><img src="images/food3.png" alt=""></span>
+           </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+    <div class="html-cover">
+        <div class="html-box">
+            <div class="close"></div>
+            <div class="txt-box">
+                <p>
+                    <span class="one">
+                        <input type="text" hidden>
+                    </span>
+                    <span class="two">
+                        <input type="text" hidden>
+                    </span>
+                </p>
+               <p>
+                    <span class="three">
+                        <input type="text" hidden>
+                    </span>
+                    <span class="four">
+                        <input type="text" hidden>
+                    </span>
+                </p>
+                <p>
+                    <span class="five">
+                        <input type="text" hidden>
+                    </span>
+                    <span class="six">
+                        <input type="text" hidden>
+                    </span>
+                </p>
+                <p>
+                    <span class="seven">
+                        <input type="text" hidden>
+                    </span>
+                    <span class="eight">
+                        <input type="text" hidden>
+                    </span>
+                </p>
+                <p>
+                    <span class="night">
+                        <input type="text" hidden>
+                    </span>
+                    <span class="ten">
+                        <input type="text" hidden>
+                    </span>
+                </p> 
+            </div>
+            <b class="submit"><img src="images/submit.png" alt=""></b>
+        </div>
+    </div>
+    <script>
+        $(function(){
+
+            //点击菜色
+            $('.foods img').on('click',function(){
+                $('.html-cover').fadeIn();
+            })
+            //关闭弹框
+            $('.close').on('click',function(){
+                $(this).closest('.html-cover').fadeOut();
+            })
+        })
+    </script>
+</body>
+</html>

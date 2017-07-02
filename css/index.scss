@@ -1,0 +1,208 @@
+@import "_base.scss";
+
+html,body{
+    width: 100%;
+    max-width: 750px;
+    min-height:43.3rem;
+    height: 100%;
+}
+img{
+    display: block;
+    width: 100%;
+}
+.index{
+    height: 100%;
+    background: url($URL+'index.jpg') no-repeat top center;
+    @include prefixer(background-size,100% 100%);  
+    position: relative;
+    .main-contain{
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        ul{
+            padding: REM(700) 2.5% 0;
+            li{
+                width: 21%;
+                margin: 0 2% REM(30);
+                float: left;
+                padding-bottom: REM(20);
+                background: url($URL+'gray_bg.png') no-repeat bottom center;
+                @include prefixer(background-size,100% auto);
+                img{
+                    width: 90%;
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+        }
+        .btn{
+            width: REM(322);
+            display: block;
+            margin: REM(30) auto 0;
+            img{
+                width: 100%;
+            }
+        }
+    }
+    .footer{
+        height: REM(586);
+        width: 100%;
+        background: url($URL+'bottom.png') no-repeat bottom center;
+        @include prefixer(background-size,100% 100%);
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        z-index: 1;
+    }  
+}
+.index-foods{
+    height: 100%;
+    background: url($URL+'index2.jpg') no-repeat top center;
+    @include prefixer(background-size,100% 100%);  
+    position: relative;
+    .main-contain{
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        .foods{
+            position: absolute;
+            top: REM(600);
+            width: 100%;
+            left: 0;
+            span{
+                width: REM(300);
+                position: absolute;
+                &:nth-child(1){
+                    left: 50%;
+                    margin-left: REMTWO(300);
+                    top: 0;
+                }
+                &:nth-child(2){
+                    top: REM(300);
+                    left: REM(60)
+                }
+                &:nth-child(3){
+                    top: REM(300);
+                    right: REM(60)
+                }
+            }
+        }
+    }
+    .footer{
+        height: REM(158);
+        width: 100%;
+        background: url($URL+'mountain.png') no-repeat bottom center;
+        @include prefixer(background-size,100% 100%);
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        z-index: 1;
+    }  
+}
+
+
+.html-cover{
+    width: 100%;
+    height: 100%;
+    max-width: 750px;
+    background:rgba(0,0,0,0.6);
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    display: none;
+    .html-box{
+        width: REM(697);
+        height: REM(1065);
+        background: url($URL+"tip.png") center top;
+        @include prefixer(background-size,100% auto);
+        position: absolute;
+        left: 50%;
+        margin-left: REMTWO(697);
+        top: 50%;
+        margin-top: REMTWO(1065);
+        .close{
+            width: REM(80);
+            height: REM(80);
+            position: absolute;
+            right: REM(0);
+            top: REM(0);
+        }
+        .txt-box{
+            width: REM(507);
+            height: REM(395);
+            position: absolute;
+            left: 50%;
+            margin-left: REMTWO(507);
+            top: REM(250);
+            background: url($URL+"txt.png") center top;
+            @include prefixer(background-size,100% auto);
+            span{
+                width: REM(22);
+                height: REM(22);
+                position: absolute;
+                background: url($URL+'circle.png') no-repeat;
+                @include prefixer(background-size,100% 100%);
+                &.one{
+                    right: REM(253);
+                    top: REM(8);
+                }
+                &.two{
+                    right: REM(110);
+                    top: REM(8);
+                }
+                &.three{
+                    right: REM(253);
+                    top: REM(98);
+                }
+                &.four{
+                    right: REM(110);
+                    top: REM(98);
+                }
+                &.five{
+                    right: REM(253);
+                    top: REM(188);
+                }
+                &.six{
+                    right: REM(110);
+                    top: REM(188);
+                }
+                &.seven{
+                    right: REM(253);
+                    top: REM(278);
+                }
+                &.eight{
+                    right: REM(110);
+                    top: REM(278);
+                }
+                &.night{
+                    right: REM(253);
+                    top: REM(368);
+                }
+                &.ten{
+                    right: REM(110);
+                    top: REM(368);
+                }
+                &.on{
+                    background: url($URL+'circle_select.png') no-repeat;
+                    @include prefixer(background-size,100% 100%);
+                }
+            }            
+        }
+        .submit{
+            width: REM(284);
+            position: absolute;
+            top: REM(700);
+            display: block;
+            left: 50%;
+            margin-left: REMTWO(284)
+        }
+        
+    }
+}
