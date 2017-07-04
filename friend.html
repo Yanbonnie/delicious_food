@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="css/map.css">
 </head>
 <body>
-    <div class="map_index">        
+    <div class="map_index">
+        <p class="num"><span>参与人数：xx</span><span>完成挑战人数：xx</span></p>
        <dl>
            <dd class="logo1 logo pulse"><span><img src="images/map_logo1.png" alt=""></span></dd>
            <dt class="light light1 hide"><img src="images/map_light.png" alt=""></dt>
@@ -49,23 +50,15 @@
            <dd class="logo9 logo pulse"><span><img src="images/map_logo9.png" alt=""></span></dd>
            <dt class="light light9 hide"><img src="images/map_light.png" alt=""></dt>
        </dl>
-        <!--<div id="slide01" class="tab">					 
-            <ul class="content">
-                <li style="display:block"></li>
-                <li></li>
-            </ul>
-        </div>-->
-
-        <span class="map_btn"><img src="images/map_rule_btn.png" alt=""></span>
-
-        <div class="page2">
-            <img src="images/map_index2.jpg" alt="">
-        </div>
+        <span id="share"><img src="images/friend_share.png" alt=""></span>
+        <span id="join"><img src="images/friend_join.png" alt=""></span>
+        
+        <!--二维码-->
        <div class="html-cover ewm-cover">
             <div class="ewm-box">
                 <b class="close"><img src="images/close.png" alt=""></b>
                 <div class="logo-header">
-                    <img alt="" src="" id="logo_img">
+                    <img alt="" src="images/m_logo3.png">
                 </div>
                 <img class="cloudy" src="images/cludy.png" alt="">
                 <div class="ewm">
@@ -76,66 +69,35 @@
             </div>
         </div>
 
-        <div class="html-cover rule-cover ">
-            <div class="html-box rule-box zoomIn">
-                <b class="close2"><img src="images/close.png" alt=""></b>
-                <img class="rule_img" src="images/map_rule.png" alt="">
+        <!--再接再厉-->
+        <div class="html-cover reward-cover">
+            <div class="html-box reward-box">
+                <span class="close"></span>
+                <h4>再接再励！</h4>
+                <p>还有<span>6</span>道美食关卡等您点亮！</p>
             </div>
         </div>
-        <div class="html-cover rule-cover2">
-            <div class="html-box rule-box">
-                <b class="close"><img src="images/close.png" alt=""></b>
-                <img class="rule_img" src="images/map_rule.png" alt="">
+        <!--胜利在望-->
+        <div class="html-cover success-cover">
+            <div class="html-box reward-box">
+                <span class="close"></span>
+                <h4>胜利在望！</h4>
+                <p>加速赢取米其林美食套券！</p>
             </div>
         </div>
+
     </div>
     <script>
         $(function(){
             $(".logo").on('click',function(){
-                
-                var imgUrl = $(this).find('img').attr('src');
-                $("#logo_img").attr('src',imgUrl);
                 $('.ewm-cover').fadeIn();
                 //$('.map_btn').addClass('pof');
             })
             
-            $(".page2").on('click',function(){
-                $(this).fadeOut();
-            })
-
-            $(".map_btn").on('click',function(){
-                $('.rule-cover2').fadeIn();
-            })
-
             $('.close').on('click',function(){
                 $(this).closest('.html-cover').fadeOut();
-               // $('.map_btn').removeClass('pof');
+                $('.map_btn').removeClass('pof');
             })
-
-            $('.close2').on('click',function(){
-                $(this).closest('.rule-cover').fadeOut(1000);
-                $('.page2').fadeIn();
-                //$('.map_btn').removeClass('pof');
-            })
-
-
-            /*var tabNum = 0;
-            window.tab1 = new mo.PageSlide({
-				target: $('#slide01 .content li'),
-                effect:'scale',
-                event:{
-                    change:function(){
-                        if(tab1.curPage == 1){
-                            tabNum++;
-                        }else{
-                            tabNum = 0;
-                        }
-                        if(tabNum >= 2){
-                            $("#slide01").fadeOut();
-                        }
-                    }
-                }
-			});*/
         })
     </script>
     
