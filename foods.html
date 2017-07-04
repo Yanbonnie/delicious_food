@@ -5,25 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="js/zepto.min.js"></script>
-    <script src="js/weui.min.js"></script>
+    <!--<script src="js/weui.min.js"></script>-->
     <script src="js/vue.min.js"></script>
     <title>万象城美食节投票评选</title>
     
     <link rel="stylesheet" href="css/weui.css">
-    <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div id="foods" style="height:100%;">
+    <div id="foods" v-cloak style="height:100%;">
         <div class="index-foods" >
             <div class="main-contain">
                <div class="foods">
-                   <span class="zoomIn" v-for="(item,index) in listFoods" @click="foodsHandle"><img :src="item" alt="" ></span>
-                   <!--<span class="zoomIn"><img src="images/food2.png" alt=""></span>
-                   <span class="zoomIn"><img src="images/food3.png" alt=""></span>-->
-                   <!-- <span><img src="images/food1.png" alt=""></span>
-                   <span><img src="images/food2.png" alt=""></span>
-                   <span><img src="images/food3.png" alt=""></span> -->
+                   <span class="zoomIn" v-for="(item,index) in listFoods" @click="foodsHandle(index)"><img :src="item" alt="" ></span>
                </div>
             </div>
             <div class="footer"></div>
@@ -63,13 +57,15 @@
                 
             </div>
         </div>
+        <!--提示框-->
         <div id="toast" class="tip" style="display: none;">
             <div class="weui-mask_transparent"></div>
             <div class="weui-toast">
-                <i class="weui-icon-warn weui-icon_msg weui-icon_toast"></i>
-                <p class="weui-toast__content">请填写完整信息</p>
+                <i class="weui-icon_msg weui-icon_toast" :class="toastState | toIcon"></i>
+                <p class="weui-toast__content">{{toastTxt}}</p>
             </div>
         </div>
+        <!--加载中-->
         <div id="loadingToast" style="display:none;">
             <div class="weui-mask_transparent"></div>
             <div class="weui-toast">
@@ -77,11 +73,33 @@
                 <p class="weui-toast__content"></p>
             </div>
         </div>
+
+        <!--按钮提示框-->
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" v-show="dialogState">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">{{dialogTxt}}</div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="knowDialog">知道了</a>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
        $(function(){    
             var $toast = $('#toast');
-            var $loadingToast = $('#loadingToast');        
+            var $loadingToast = $('#loadingToast');    
+            Vue.filter('toIcon',function(n){   //
+				var calssName = "";
+				if(n == 0){
+					calssName = "weui-icon-warn" //警告
+				}
+				if(n==1){
+					calssName = "weui-icon-success"  //成功
+				}
+				return calssName;
+			});    
             var vm = new Vue({
                 el:"#foods",
                 data:{
@@ -151,7 +169,12 @@
                             ]
                         }
                     ],
+                    toastState:null,
+                    toastTxt:"",
+                    dialogState:false,  //带按钮提示框状态
+                    dialogTxt:"",
                     listFoods:[],
+                    foodId:null,
                     shoperId:null,
                     goTime:null,  //上菜时间
                     flavor:null,  //口味
@@ -161,46 +184,53 @@
                 },
                 methods:{
                     getData(){  //通过id获取对应的数据
-                        /*var $loadingToast = $('#loadingToast');  
-                        var That = this;
-                        $loadingToast.fadeIn(100);
-                        $loadingToast.find('.weui-toast__content').text("数据加载中");
-                        $.ajax({
-                            url:'http://test.xhwxpos.com/apply/index.php?m=Wap&c=Index&a=ajax_get_cancel&id='+That.shoperId,
-                            dataType:'json',
-                            type:'get',
-                            success:function(res){
-                                $loadingToast.fadeOut(100);
-                                $loadingToast.find('.weui-toast__content').text(""); 
-                                That.list = res.data.list;
-                            },
-                            error:function(XMLHttpRequest, textStatus, errorThrown) {
-                                console.log(XMLHttpRequest)
-                            }
-                        })*/
                         for(var i = 0; i < this.list.length;i++){
-                            console.log(this.list[i].id)
                             if(this.list[i].id == this.shoperId){
                                 this.listFoods = this.list[i].imagesUrl;
                                 return false;
                             }
                         }
                     },
-                    foodsHandle(){
-                        $('.html-cover').fadeIn();
+                    foodsHandle(index){
+                        this.foodId = index+1;
+                        $('.html-cover').show();
                     },
                     submitHandle(){
                         var $loadingToast = $('#loadingToast');  
+                         var $toast = $('#toast');
                         var That = this;
                         if(this.valitate()){
                             $loadingToast.fadeIn(100);
                             $loadingToast.find('.weui-toast__content').text("数据提交中");
                             $.ajax({
-                                url:'http://test.xhwxpos.com/apply/index.php?m=Wap&c=Index&a=ajax_get_cancel&id='+That.shoperId,
+                                url:'http://test.xhwxpos.com/food/index.php?m=Wap&c=Index&a=ajax_post_evaluate&debug=1',
+                                data:{
+                                    'code':'32b85fa07b5ad8fc6fcd1d8c6bcc2142',
+                                    'serving':That.goTime,
+                                    'taste':That.flavor,
+                                    'hygiene':That.hygiene, //卫生
+                                    'service':That.service, //服务
+                                    'price':That.price,   //价格
+                                    'shop':That.shoperId,
+                                    'food':That.foodId
+                                },
                                 dataType:'json',
-                                type:'get',
+                                type:'post',
                                 success:function(res){
                                     $loadingToast.fadeOut(100); 
+                                    if(res.sta == 0){                                        
+                                        That.toastState = 1;
+                                        That.toastTxt = "评价成功";
+                                        $toast.fadeIn(100);
+                                        setTimeout(function () {
+                                            $toast.fadeOut(100);
+                                            That.toastTxt = "";
+                                            That.dataInit();
+                                        }, 2000);
+                                    }else{
+                                        That.dialogState=true;  //带按钮提示框状态
+                                        That.dialogTxt=res.msg;
+                                    }                                  
                                 },
                                 error:function(XMLHttpRequest, textStatus, errorThrown) {
                                     console.log(XMLHttpRequest)
@@ -208,6 +238,10 @@
                             })
                         }
                         //alert("提交")
+                    },
+                    knowDialog:function(){  //弹框我知道了
+                        this.dialogState = false;
+                        this.dialogTxt = "";
                     },
                     getUrlPara:function(str,_url){
                         var reg = new RegExp("(^|&)" + str + "=([^&]*)(&|$)", "i");
@@ -217,6 +251,7 @@
                         return str;
                     },
                     valitate:function(){
+                        var That = this;
                         var $toast = $('#toast');
                         var arrInput = $("#form").find('input');
                         for(var i = 0 ; i < arrInput.length; i++){
@@ -224,13 +259,27 @@
                                 console.log("goTime"+this.goTime+" flavor:"+this.flavor+" hygiene:"+this.hygiene+" service:"+this.service+" price:"+this.price)
                                 return true;
                             }else{
+                                this.toastState = 0;
+                                this.toastTxt = "请完整填写信息";
                                 $toast.fadeIn(100);
                                 setTimeout(function () {
                                     $toast.fadeOut(100);
+                                    That.toastTxt = "";
+                                    //That.dataInit();  //数据还原
+                                    //$('.html-cover').fadeOut();
                                 }, 2000);
                                 return false;
                             }
                         } 
+                    },
+                    dataInit(){
+                            this.goTime = null;
+                            this.flavor = null;
+                            this.hygiene = null;
+                            this.service = null;
+                            this.price = null;
+                            $("#form").find('span').removeClass('on');
+                            $('.html-cover').fadeOut();
                     },
                     init:function(){
                         var That = this;
@@ -255,13 +304,20 @@
                             $(this).siblings('span').removeClass('on');
                         })
 
-                        //点击菜色
-                        $('.foods img').on('click',function(){
-                            $('.html-cover').fadeIn();
-                        }) 
+                        // //点击菜色
+                        // $('.foods span').on('click',function(){
+                        //     alert(123)
+                        //     var index = $(this).index();
+                        //     //console.log(index);
+                        //     That.foodId = index;
+                        //     console.log(That)
+                        //     $('.html-cover').fadeIn();
+                        // }) 
                         //关闭弹框 
                         $('.close').on('click',function(){
-                            $(this).closest('.html-cover').fadeOut();
+                           // $(this).closest('.html-cover').fadeOut();
+                            That.dataInit();
+                            
                         })
                     }
                 },

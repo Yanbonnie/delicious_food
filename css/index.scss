@@ -2,13 +2,16 @@
 
 html,body{
     width: 100%;
-    max-width: 750px;
-  
+    max-width: 750px;  
     height: 100%;
+    margin: 0 auto; 
 }
 img{
     display: block;
     width: 100%;
+}
+[v-cloak] {
+    display: none;
 }
 .index{
     height: 100%;
@@ -242,11 +245,32 @@ img{
 
 
 /*提示*/
-.tip .weui-icon-warn{
-    font-size: 2rem;
+.tip .weui-icon_msg{
+    font-size: 3rem;
     padding-bottom:10px;
 }
 
+.weui-toast {
+    position: fixed;
+    z-index: 5000;
+    width: REM(300);
+    min-height: REM(300);
+    top: 50%;
+    left: 50%;
+    margin-top: REMTWO(300);
+    margin-left:REMTWO(300);
+    background: rgba(17,17,17,0.7);
+    text-align: center;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+.weui-toast__content{
+    line-height: REM(80);
+    font-size: 15px;
+}
+.weui-dialog__bd{
+    line-height: 2rem;
+}
 
 @-webkit-keyframes bounceIn {
 	0%,100%,20%,40%,60%,80% {
